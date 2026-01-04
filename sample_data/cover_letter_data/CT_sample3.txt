@@ -1,0 +1,6 @@
+Hello,
+I would like to apply to your XXXXX position. Just take a look at my resume (attached) to see all my experience in the web development field and in Python in particular.
+In a nutshell, I have 10 years of experience in web development, of which the last two are in Python and Django. I am language-agnostic, meaning the language itself is not very significant to me; however, platform, paradigm, and architecture do make a difference.
+I am deeply interested in building application architectures and solving business problems using technology rather than just coding for the sake of it. I also enjoy creating experimental applications to solve real-life problems.
+Regards,
+Sergey Vasilyev

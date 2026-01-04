@@ -1,0 +1,36 @@
+Revscale® delivers fully managed, seamlessly integrated AI agents that automate growth for sales, marketing, support, and more — no technical setup required. Let our intelligent agents generate leads, instantly qualify opportunities, and engage customers 24/7, driving results while you focus on strategic growth decisions.
+
+Join us at Revscale to work on developing intuitive, user-friendly web interfaces that empower our clients and make a significant impact on our AI-driven platform.
+
+What You’ll Do
+
+Frontend Development:
+• Assist in developing and maintaining responsive web pages using HTML, CSS, and TypeScript
+• Build and enhance reusable components using React.js
+• Collaborate with designers and backend developers to bring mockups to life, ensuring a seamless user experience
+
+UI/UX Improvement:
+• Fix bugs and improve existing UI/UX based on user feedback to enhance overall functionality and design
+• Participate in the development of new features while maintaining a clean and optimized frontend codebase
+
+Collaboration & Learning:
+• Write clean, well-documented code that follows best practices
+• Participate in code reviews to ensure high code quality and knowledge sharing across the team
+• Learn and grow as part of a dynamic team in a fast-paced environment
+
+What We’re Looking For
+
+Experience & Knowledge:
+• Basic understanding of HTML5, CSS3, and TypeScript
+• Familiarity with React.js and component-based architecture
+• Strong attention to detail with a focus on solving problems and improving user experience
+
+Skills & Attributes:
+• Curiosity and eagerness to learn and grow in a fast-paced development environment
+• Excellent communication skills, with the ability to collaborate effectively with designers and backend developers
+• Strong problem-solving skills, with a keen eye for detail and optimization
+
+Bonus Skills (Not Required):
+• Familiarity with tools like Git, Figma, or CSS frameworks like Tailwind
+• Basic understanding of REST APIs and how they integrate with frontend applications
+• A portfolio or GitHub repository showcasing sample projects and work

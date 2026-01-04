@@ -1,0 +1,13 @@
+We are seeking an Entry-Level Python Developer who is passionate about coding and problem-solving. The candidate will work on backend development tasks and support existing applications.
+
+Responsibilities:
+• Write and maintain Python scripts
+• Assist in backend development using Python frameworks
+• Perform unit testing and bug fixing
+• Participate in code reviews
+
+Requirements:
+• Basic knowledge of Python programming
+• Familiarity with Django or Flask is a plus
+• Understanding of OOP concepts
+• Ability to learn new technologies quickly

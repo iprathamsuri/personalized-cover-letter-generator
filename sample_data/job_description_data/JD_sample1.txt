@@ -1,0 +1,11 @@
+We are looking for a Fresher Software Developer to join our development team. The ideal candidate should have basic knowledge of programming concepts and a strong willingness to learn.
+Responsibilities:
+• Assist in developing and maintaining software applications
+• Write clean and efficient code under guidance
+• Debug and troubleshoot basic application issues
+• Collaborate with senior developers and team members
+Requirements:
+• Bachelor’s degree in Computer Science or related field
+• Knowledge of at least one programming language (Java / Python / C++)
+• Basic understanding of databases and data structures
+• Good communication and teamwork skills

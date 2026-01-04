@@ -1,0 +1,16 @@
+As a Simulation Test Engineering AI/ML Software Engineer intern, you’ll partner with senior engineers to develop, evaluate, and deploy AI/ML tools to scale the development of end-to-end simulation tests, which are used by GM for validation of the autonomous driving software stack. You’ll learn about how simulation testing is performed at GM to evaluate AV stack performance, and your work will play a critical role in managing the creation and quality of these simulation tests throughout their lifecycle.
+
+Required Qualifications:
+• Currently pursuing or in the process of obtaining a Master’s in Machine Learning, Artificial Intelligence, Computer Science, or a related technical field.
+• Solid understanding of modern machine learning techniques
+• Demonstrated coursework, research, or projects in AI/ML
+• Strong programming skills in Python
+• Able to work fulltime, 40 hours per week
+
+Preferred Qualifications:
+• Exposure to deep learning architectures such as Transformers, CNNs, or Diffusion Models
+• Hands-on experience with one or more machine learning frameworks (e.g., PyTorch, TensorFlow, JAX, or Keras)
+• Experience with robotics, computer vision through projects or research
+• Familiarity with multimodal learning or working with sensor data
+• Interest in contributing to publications, open-source projects, or patents
+• Familiarity with systems programming languages (e.g., C++ or Java) is a plus
