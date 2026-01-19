@@ -16,6 +16,7 @@ from data_loader import DataLoader
 from preprocessing import TextPreprocessor
 from vectorizer import TFIDFVectorizer
 from similarity import SimilarityCalculator
+from generator import CoverLetterGenerator
 
 
 def main():
@@ -54,6 +55,13 @@ def main():
     
     # Interactive mode
     interactive_parser = subparsers.add_parser('interactive', help='Run in interactive mode')
+
+    # Generate command
+    generate_parser = subparsers.add_parser('generate', help='Generate personalized cover letter')
+    generate_parser.add_argument('--jd-file', type=str, help='Job description file path')
+    generate_parser.add_argument('--user-input', type=str, help='User skills and experience input')
+    generate_parser.add_argument('--use-match', type=int, help='Use best match index for content')
+    generate_parser.add_argument('--output', type=str, help='Output file for generated cover letter')
     
     args = parser.parse_args()
     
@@ -75,6 +83,8 @@ def main():
             run_keywords(matcher, args)
         elif args.command == 'interactive':
             run_interactive_mode(matcher)
+        elif args.command == 'generate':
+            run_generate(matcher, args)
             
     except Exception as e:
         print(f"Error: {str(e)}")
@@ -179,7 +189,62 @@ def run_analysis(matcher, args):
     print(f"   Median Length: {sorted(lengths)[len(lengths)//2]} words")
 
 
-def run_keywords(matcher, args):
+def run_generate(matcher, args):
+    """Generate personalized cover letter."""
+    print("📝 Generating Personalized Cover Letter")
+    print("=" * 50)
+    
+    # Initialize generator
+    generator = CoverLetterGenerator()
+    
+    # Load job description
+    if args.jd_file:
+        with open(args.jd_file, 'r', encoding='utf-8') as f:
+            job_description = f.read()
+    else:
+        job_description = input("Enter job description: ")
+    
+    # Load user input
+    if args.user_input:
+        user_input = args.user_input
+    else:
+        user_input = input("Enter your skills and experience (e.g., 'My name is John and I have 3 years of experience in Python...'): ")
+    
+    # Get best match content if requested
+    best_match_content = ""
+    if args.use_match is not None:
+        # Run pipeline first to get matches
+        if matcher.similarity_matrix is None:
+            print("Loading data for matching...")
+            matcher.run_full_pipeline()
+        
+        # Get best match
+        matches = matcher.find_best_matches(args.use_match, top_n=1)
+        if matches:
+            best_match_content = matcher.cover_letters[matches[0][0]][:500]
+    
+    # Generate cover letter
+    cover_letter = generator.generate_cover_letter(
+        job_description=job_description,
+        user_input=user_input,
+        best_match_content=best_match_content
+    )
+    
+    # Save or display output
+    if args.output:
+        with open(args.output, 'w', encoding='utf-8') as f:
+            f.write(cover_letter)
+        print(f"\n✅ Cover letter saved to: {args.output}")
+    else:
+        print("\n📄 Generated Cover Letter:")
+        print("=" * 50)
+        print(cover_letter)
+    
+    print("\n🎯 Generation Info:")
+    try:
+        print(generator.get_generation_info())
+    except AttributeError as e:
+        print(f"Generation completed with available features: {generator.get_generation_info()}")
     """Extract and display top keywords."""
     print(f"🔤 Extracting Top {args.top_n} Keywords from {args.type.replace('_', ' ').title()}")
     print("=" * 60)
@@ -287,6 +352,7 @@ def print_help():
     print("  stats                         - Show data statistics")
     print("  top                           - Show top 10 overall matches")
     print("  keywords <type>               - Show keywords (cover_letters/job_descriptions)")
+    print("  generate                       - Generate personalized cover letter")
     print("  quit/exit                     - Exit interactive mode")
 
 
