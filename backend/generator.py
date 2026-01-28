@@ -137,8 +137,6 @@ I have long admired {company}'s commitment to {company_values} and your innovati
 
 As a mid-level professional, I bring a balanced combination of technical expertise and business acumen. I have experience in {key_skills} and have developed strong problem-solving abilities, project management skills, and the capacity to work effectively in cross-functional teams. I believe my experience in bridging technical solutions with business needs would be valuable to your organization.
 
-I am excited about the possibility of bringing my skills and experience to {company}. I would welcome the opportunity to discuss how I can contribute to your team's success.
-
 {closing_phrase}
 
 {candidate_name}""",
@@ -447,13 +445,13 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
             # Fallback cover letter
             return f"""Dear Hiring Manager,
 
-{template_vars['opening_phrase']} {template_vars['position']} position at {template_vars['company'] or 'your company'}.
+I am excited to apply for the {template_vars['position']} position at {template_vars['company'] or 'your company'}.
 
 Based on my background in {user_info.get('skills', 'relevant technologies')} and the requirements outlined in your job description, I believe I would be a valuable addition to your team.
 
 I look forward to discussing how my qualifications can benefit your organization.
 
-{random.choice(['Thank you for your consideration.', 'I appreciate your time and consideration.', 'Thank you for reviewing my application.'])}
+Thank you for your consideration.
 
-{random.choice(['Sincerely', 'Best regards', 'Yours sincerely'])},
+Sincerely,
 {user_info.get('name', 'Candidate')}"""
