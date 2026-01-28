@@ -139,6 +139,9 @@ As a mid-level professional, I bring a balanced combination of technical experti
 
 {closing_phrase}
 
+Thank you for your consideration.
+
+Sincerely,
 {candidate_name}""",
             
             """Dear {hiring_manager},
@@ -182,7 +185,7 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
                 else:
                     position = match.group(1).strip()
                     # Clean up the position - remove trailing phrases and extra words
-                    position = re.sub(r'\s+(?:with|for|who|that|and|the|a|an|to|join|our|innovative|team).*$', '', position, flags=re.IGNORECASE)
+                    position = re.sub(r'\s+(?:with|for|who|that|and|the|a|an|to|join|our|innovative|team|role|position).*$', '', position, flags=re.IGNORECASE)
                     position = re.sub(r'[.!?]+$', '', position).strip()
                     # Also clean up common position phrases
                     position = re.sub(r'\s+(?:position|role|job)$', '', position, flags=re.IGNORECASE).strip()
@@ -276,6 +279,12 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
             'experience_level': self._determine_experience_level(years)
         }
     
+    def debug_extract_user_info(self, user_input: str) -> Dict:
+        """Debug version to see what's being extracted."""
+        result = self.extract_user_info(user_input)
+        print(f"🔍 Generator Debug - Extracted: {result}")
+        return result
+    
     def _determine_experience_level(self, years: str) -> str:
         """Determine experience level from years string."""
         try:
@@ -329,8 +338,24 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
         # Remove repetitive phrases
         text = re.sub(r'\b(I am|I have|I believe)\s+\1+', r'\1', text, flags=re.IGNORECASE)
         
-        # Clean up trailing 'and' in signatures
+        # Clean up trailing 'and' in signatures and other places
         text = re.sub(r'([A-Z][a-z\s]+)\s+and\s*$', r'\1', text, flags=re.MULTILINE)
+        text = re.sub(r'([A-Z][a-z]+)\s+and\s*$', r'\1', text, flags=re.MULTILINE)
+        
+        # Remove duplicate closing sentences
+        lines = text.split('\n')
+        cleaned_lines = []
+        seen_lines = set()
+        
+        for line in lines:
+            line = line.strip()
+            if line and line not in seen_lines:
+                cleaned_lines.append(line)
+                seen_lines.add(line)
+            elif not line:  # Keep empty lines for paragraph breaks
+                cleaned_lines.append(line)
+        
+        text = '\n'.join(cleaned_lines)
         
         # Only add transitions where appropriate (not too many)
         # This was adding too many "Additionally" - let's remove it for now
@@ -440,9 +465,38 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
             # Generate cover letter
             cover_letter = template.format(**template_vars)
             
+            # Extract experience from user_input to override if needed
+            exp_match = re.search(r'I have (\d+\+?)\s*years', user_input, re.IGNORECASE)
+            if exp_match:
+                # Replace the experience in the generated letter
+                cover_letter = re.sub(r'\b\d+\+?\s*years', exp_match.group(1) + ' years', cover_letter, flags=re.IGNORECASE)
+            
             # Enhance and clean
             cover_letter = self._enhance_natural_flow(cover_letter)
             cover_letter = self._clean_generated_text(cover_letter)
+            
+            # Final cleanup - remove trailing 'and' from signature
+            cover_letter = re.sub(r'([A-Z][a-z\s]+)\s+and\s*$', r'\1', cover_letter, flags=re.MULTILINE)
+            cover_letter = re.sub(r'([A-Z][a-z]+)\s+and\s*$', r'\1', cover_letter, flags=re.MULTILINE)
+            
+            # Aggressive cleanup for any trailing 'and' after names
+            lines = cover_letter.split('\n')
+            for i, line in enumerate(lines):
+                line = line.strip()
+                # Check if line looks like a name (2+ words, starts with capital letters)
+                if re.match(r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+', line):
+                    # Remove trailing 'and'
+                    line = re.sub(r'\s+and\s*$', '', line)
+                    lines[i] = line
+            
+            cover_letter = '\n'.join(lines)
+            
+            # Ultimate cleanup - remove 'and' from the very end of the document
+            cover_letter = cover_letter.rstrip()
+            if cover_letter.endswith(' and'):
+                cover_letter = cover_letter[:-4].rstrip()
+            elif cover_letter.endswith(' and '):
+                cover_letter = cover_letter[:-5].rstrip()
             
             return cover_letter
             

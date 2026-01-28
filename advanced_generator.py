@@ -385,7 +385,12 @@ def process_resume(resume_text):
     # Get target job information
     target_role = input("🎯 What type of position are you applying for? ").strip()
     target_company = input("🏢 Company name (optional - e.g., TCS, Cognizant, Deloitte): ").strip()
-    if not target_company:
+    
+    # Validate company name - don't accept numbers or years
+    if target_company and re.search(r'\d+', target_company):
+        print("⚠️  Company name should not contain numbers. Using 'the Company' instead.")
+        target_company = "the Company"
+    elif not target_company:
         target_company = "the Company"
     
     # Generate job description based on target role
@@ -409,7 +414,7 @@ def process_resume(resume_text):
             import re
             years_match = re.search(r'\d+', experience)
             if years_match:
-                experience = years_match.group(1) + "+ years"
+                experience = years_match.group() + "+ years"
         
     else:
         # Ask for confirmation only if extraction failed
@@ -427,10 +432,13 @@ def process_resume(resume_text):
         if experience and experience != 'Not found':
             years_match = re.search(r'\d+', experience)
             if years_match:
-                experience = years_match.group(1) + "+ years"
+                experience = years_match.group() + "+ years"
     
     # Create user input from resume
     user_input = f"My name is {name or extracted_info.get('name', 'Candidate')} and I have {experience or extracted_info.get('experience', 'relevant experience')}. I am skilled in {skills or extracted_info.get('skills', 'various technologies')}."
+    
+    # Debug: Print what we're sending to the generator
+    print(f"🔍 Debug - User input being sent: {user_input}")
 
     # Get output filename
     output_file = input("💾 Enter output filename (e.g., resume_based_cover_letter.txt): ").strip()
