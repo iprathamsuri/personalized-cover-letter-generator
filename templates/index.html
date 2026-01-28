@@ -305,7 +305,7 @@
                     
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                            <label for="skills-input" class="block text-sm font-medium text-gray-300 mb-2">
                                 Your Skills & Experience
                             </label>
                             <textarea 
@@ -356,15 +356,27 @@
 
                         <div class="grid md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">
-                                    Experience Level
+                                <label for="skills-years" class="block text-sm font-medium text-gray-300 mb-2">
+                                    Years of Experience
                                 </label>
-                                <select id="skills-experience" class="input-field w-full">
-                                    <option value="fresher">Fresher / Entry Level</option>
-                                    <option value="mid-level" selected>Professional (2-5 years)</option>
-                                    <option value="senior">Senior Professional (5+ years)</option>
-                                    <option value="expert">Expert / Lead (10+ years)</option>
-                                </select>
+                                <div class="flex gap-2">
+                                    <input 
+                                        type="number" 
+                                        id="skills-years" 
+                                        class="input-field w-24"
+                                        placeholder="Years"
+                                        min="0"
+                                        max="50"
+                                        value="3"
+                                    >
+                                    <select id="skills-experience-auto" class="input-field flex-1" disabled>
+                                        <option value="fresher">Fresher / Entry Level (0-1 years)</option>
+                                        <option value="mid-level" selected>Professional (2-5 years)</option>
+                                        <option value="senior">Senior Professional (6-10 years)</option>
+                                        <option value="expert">Expert / Lead (10+ years)</option>
+                                    </select>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">Enter exact years • Auto-categorized</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
@@ -472,14 +484,26 @@
                         <div class="grid md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
-                                    Experience Level
+                                    Years of Experience
                                 </label>
-                                <select id="resume-experience" class="input-field w-full">
-                                    <option value="fresher">Fresher / Entry Level</option>
-                                    <option value="mid-level" selected>Professional (2-5 years)</option>
-                                    <option value="senior">Senior Professional (5+ years)</option>
-                                    <option value="expert">Expert / Lead (10+ years)</option>
-                                </select>
+                                <div class="flex gap-2">
+                                    <input 
+                                        type="number" 
+                                        id="resume-years" 
+                                        class="input-field w-24"
+                                        placeholder="Years"
+                                        min="0"
+                                        max="50"
+                                        value="3"
+                                    >
+                                    <select id="resume-experience-auto" class="input-field flex-1" disabled>
+                                        <option value="fresher">Fresher / Entry Level (0-1 years)</option>
+                                        <option value="mid-level" selected>Professional (2-5 years)</option>
+                                        <option value="senior">Senior Professional (6-10 years)</option>
+                                        <option value="expert">Expert / Lead (10+ years)</option>
+                                    </select>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">Enter exact years • Auto-categorized</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
@@ -556,14 +580,26 @@
                         <div class="grid md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
-                                    Experience Level
+                                    Years of Experience
                                 </label>
-                                <select id="manual-experience" class="input-field w-full">
-                                    <option value="fresher">Fresher / Entry Level</option>
-                                    <option value="mid-level" selected>Professional (2-5 years)</option>
-                                    <option value="senior">Senior Professional (5+ years)</option>
-                                    <option value="expert">Expert / Lead (10+ years)</option>
-                                </select>
+                                <div class="flex gap-2">
+                                    <input 
+                                        type="number" 
+                                        id="manual-years" 
+                                        class="input-field w-24"
+                                        placeholder="Years"
+                                        min="0"
+                                        max="50"
+                                        value="3"
+                                    >
+                                    <select id="manual-experience-auto" class="input-field flex-1" disabled>
+                                        <option value="fresher">Fresher / Entry Level (0-1 years)</option>
+                                        <option value="mid-level" selected>Professional (2-5 years)</option>
+                                        <option value="senior">Senior Professional (6-10 years)</option>
+                                        <option value="expert">Expert / Lead (10+ years)</option>
+                                    </select>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">Enter exact years • Auto-categorized</p>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">
@@ -786,9 +822,15 @@
         // Generation functions
         async function generateFromSkills() {
             const userInput = document.getElementById('skills-input').value;
-            const experience = document.getElementById('skills-experience').value;
+            const years = document.getElementById('skills-years').value;
+            const experience = document.getElementById('skills-experience-auto').value;
             const targetRole = document.getElementById('skills-role').value;
             const company = document.getElementById('skills-company').value;
+            
+            // Debug logging
+            console.log('🔍 Frontend Debug - Years input:', years);
+            console.log('🔍 Frontend Debug - User input:', userInput);
+            console.log('🔍 Frontend Debug - Experience level:', experience);
             
             // Get job description based on input method
             const jdMethod = document.querySelector('input[name="skills-jd-method"]:checked').value;
@@ -802,7 +844,10 @@
                 }
             } else {
                 jobDescription = document.getElementById('skills-jd').value;
-                // JD is optional for skills-based, so no error if empty
+                if (!jobDescription.trim()) {
+                    showError('Please enter a job description');
+                    return;
+                }
             }
             
             if (!userInput.trim()) {
@@ -810,14 +855,48 @@
                 return;
             }
             
-            await generateCoverLetter('skills', userInput, jobDescription, targetRole, company, '', experience);
+            // Automatically add years to user input if not already mentioned
+            let enhancedUserInput = userInput;
+            console.log('🔍 Frontend Debug - Before enhancement:', enhancedUserInput);
+            console.log('🔍 Frontend Debug - Years value:', years);
+            console.log('🔍 Frontend Debug - User input includes "year":', userInput.toLowerCase().includes('year'));
+            
+            // Force years to be included
+            if (years && years !== '0' && years !== '') {
+                // Check if user input already mentions WORK experience (not art, education, etc.)
+                const workExperiencePatterns = [
+                    /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?(?:work|professional|industry|technical|software|programming|development|experience)/i,
+                    /(?:work|professional|industry|technical|software|programming|development|experience)[:\s]+(\d+)\s*(?:years?|yr)s?/i,
+                    /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?experience/i
+                ];
+                
+                const hasWorkExperience = workExperiencePatterns.some(pattern => pattern.test(userInput));
+                
+                if (!hasWorkExperience) {
+                    enhancedUserInput = `I have ${years} years of experience. ${userInput}`;
+                    console.log('🔍 Frontend Debug - After enhancement:', enhancedUserInput);
+                } else {
+                    console.log('🔍 Frontend Debug - User already contains work experience, no enhancement needed');
+                }
+            } else {
+                console.log('🔍 Frontend Debug - No valid years provided, forcing default');
+                enhancedUserInput = `I have 3 years of experience. ${userInput}`;
+                console.log('🔍 Frontend Debug - Forced enhancement:', enhancedUserInput);
+            }
+            
+            await generateCoverLetter('skills', enhancedUserInput, jobDescription, targetRole, company, '', experience);
         }
 
         async function generateFromResume() {
             const jobDescription = document.getElementById('resume-jd').value;
-            const experience = document.getElementById('resume-experience').value;
+            const years = document.getElementById('resume-years').value;
+            const experience = document.getElementById('resume-experience-auto').value;
             const targetRole = document.getElementById('resume-role').value;
             const company = document.getElementById('resume-company').value;
+            
+            // Debug logging
+            console.log('🔍 Resume Debug - Years input:', years);
+            console.log('🔍 Resume Debug - Experience level:', experience);
             
             // Get resume text based on input method
             const resumeMethod = document.querySelector('input[name="resume-input-method"]:checked').value;
@@ -842,15 +921,54 @@
                 return;
             }
             
-            await generateCoverLetter('resume', resumeInput, jobDescription, targetRole, company, resumeInput, experience);
+            console.log('🔍 Resume Debug - Resume input length:', resumeInput.length);
+            console.log('🔍 Resume Debug - Before enhancement:', resumeInput.substring(0, 100) + '...');
+            
+            // Automatically add years to resume input if not already mentioned
+            let enhancedResumeInput = resumeInput;
+            if (years && years !== '0' && years !== '') {
+                // Check if resume already mentions WORK experience (not art, education, etc.)
+                const workExperiencePatterns = [
+                    /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?(?:work|professional|industry|technical|software|programming|development|experience)(?!.*art)/i,
+                    /(?:work|professional|industry|technical|software|programming|development|experience)(?!.*art)[:\s]+(\d+)\s*(?:years?|yr)s?/i,
+                    /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?experience(?!.*art)/i
+                ];
+                
+                // Also explicitly exclude art-related years
+                const hasArtYears = /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?(?:art|drawing|music|dance|painting|sketching)/i.test(resumeInput);
+                
+                const hasWorkExperience = workExperiencePatterns.some(pattern => pattern.test(resumeInput)) && !hasArtYears;
+                
+                console.log('🔍 Resume Debug - Has art years:', hasArtYears);
+                console.log('🔍 Resume Debug - Has work experience:', hasWorkExperience);
+                
+                if (!hasWorkExperience) {
+                    enhancedResumeInput = `I have ${years} years of experience. ${resumeInput}`;
+                    console.log('🔍 Resume Debug - After enhancement:', enhancedResumeInput.substring(0, 150) + '...');
+                } else {
+                    console.log('🔍 Resume Debug - Resume already contains work experience, no enhancement needed');
+                }
+            } else {
+                console.log('🔍 Resume Debug - No valid years provided, forcing default');
+                enhancedResumeInput = `I have 3 years of experience. ${resumeInput}`;
+                console.log('🔍 Resume Debug - Forced enhancement:', enhancedResumeInput.substring(0, 150) + '...');
+            }
+            
+            await generateCoverLetter('resume', enhancedResumeInput, jobDescription, targetRole, company, enhancedResumeInput, experience);
         }
 
         async function generateFromManual() {
             const userInput = document.getElementById('manual-input').value;
             const jobDescription = document.getElementById('manual-jd').value;
-            const experience = document.getElementById('manual-experience').value;
+            const years = document.getElementById('manual-years').value;
+            const experience = document.getElementById('manual-experience-auto').value;
             const targetRole = document.getElementById('manual-role').value;
             const company = document.getElementById('manual-company').value;
+            
+            // Debug logging
+            console.log('🔍 Manual Debug - Years input:', years);
+            console.log('🔍 Manual Debug - User input:', userInput);
+            console.log('🔍 Manual Debug - Experience level:', experience);
             
             if (!userInput.trim()) {
                 showError('Please enter your information');
@@ -862,12 +980,50 @@
                 return;
             }
             
-            await generateCoverLetter('manual_jd', userInput, jobDescription, targetRole, company, '', experience);
+            // Automatically add years to user input if not already mentioned
+            let enhancedUserInput = userInput;
+            console.log('🔍 Manual Debug - Before enhancement:', enhancedUserInput);
+            console.log('🔍 Manual Debug - Years value:', years);
+            console.log('🔍 Manual Debug - User input includes "year":', userInput.toLowerCase().includes('year'));
+            
+            // Force years to be included
+            if (years && years !== '0' && years !== '') {
+                // Check if user input already mentions WORK experience (not art, education, etc.)
+                const workExperiencePatterns = [
+                    /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?(?:work|professional|industry|technical|software|programming|development|experience)/i,
+                    /(?:work|professional|industry|technical|software|programming|development|experience)[:\s]+(\d+)\s*(?:years?|yr)s?/i,
+                    /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?experience/i
+                ];
+                
+                const hasWorkExperience = workExperiencePatterns.some(pattern => pattern.test(userInput));
+                
+                if (!hasWorkExperience) {
+                    enhancedUserInput = `I have ${years} years of experience. ${userInput}`;
+                    console.log('🔍 Manual Debug - After enhancement:', enhancedUserInput);
+                } else {
+                    console.log('🔍 Manual Debug - User already contains work experience, no enhancement needed');
+                }
+            } else {
+                console.log('🔍 Manual Debug - No valid years provided, forcing default');
+                enhancedUserInput = `I have 3 years of experience. ${userInput}`;
+                console.log('🔍 Manual Debug - Forced enhancement:', enhancedUserInput);
+            }
+            
+            await generateCoverLetter('manual_jd', enhancedUserInput, jobDescription, targetRole, company, '', experience);
         }
 
         async function generateCoverLetter(method, userInput, jobDescription, targetRole, company, resumeText = '', experience = '') {
             showLoading();
             hideResults();
+            
+            // Debug logging - what's being sent to API
+            console.log('🔍 API Debug - Method:', method);
+            console.log('🔍 API Debug - User Input:', userInput);
+            console.log('🔍 API Debug - Job Description:', jobDescription);
+            console.log('🔍 API Debug - Target Role:', targetRole);
+            console.log('🔍 API Debug - Company:', company);
+            console.log('🔍 API Debug - Resume Text:', resumeText);
+            console.log('🔍 API Debug - Experience Level:', experience);
             
             try {
                 const response = await fetch('/api/generate', {
@@ -887,6 +1043,12 @@
                 });
                 
                 const result = await response.json();
+                
+                // Debug logging - what's received from backend
+                console.log('🔍 Response Debug - Full result:', result);
+                console.log('🔍 Response Debug - Success:', result.success);
+                console.log('🔍 Response Debug - Cover letter preview:', result.cover_letter ? result.cover_letter.substring(0, 200) + '...' : 'No cover letter');
+                console.log('🔍 Response Debug - Generation info:', result.generation_info);
                 
                 if (result.success) {
                     displayResults(result.cover_letter, result.generation_info);
@@ -911,17 +1073,33 @@
         }
 
         function displayResults(coverLetter, stats) {
-            currentCoverLetter = coverLetter;
-            document.getElementById('cover-letter-content').textContent = coverLetter;
+            console.log('🔍 Display Debug - Cover letter received:', coverLetter ? coverLetter.substring(0, 200) + '...' : 'No cover letter');
+            console.log('🔍 Display Debug - Stats received:', stats);
             
-            if (stats) {
-                const experienceText = stats.experience_level ? ` • Experience: ${stats.experience_level}` : '';
-                document.getElementById('generation-stats').innerHTML = 
-                    `Generated in ${stats.method} mode • ${stats.word_count} words • ${stats.character_count} characters • Target: ${stats.target_role}${experienceText}`;
-            }
+            // Clear any existing content first
+            const contentElement = document.getElementById('cover-letter-content');
+            contentElement.textContent = '';
             
-            document.getElementById('results').classList.remove('hidden');
-            document.getElementById('error-message').classList.add('hidden');
+            // Force DOM update
+            setTimeout(() => {
+                currentCoverLetter = coverLetter;
+                contentElement.textContent = coverLetter;
+                
+                // Debug - check what's actually in the content element
+                const displayedContent = contentElement.textContent;
+                console.log('🔍 Display Debug - Actually displayed:', displayedContent ? displayedContent.substring(0, 200) + '...' : 'No content displayed');
+                console.log('🔍 Display Debug - Contains "5 years":', displayedContent.includes('5 years'));
+                console.log('🔍 Display Debug - Contains "0 years":', displayedContent.includes('0 years'));
+                
+                if (stats) {
+                    const experienceText = stats.experience_level ? ` • Experience: ${stats.experience_level}` : '';
+                    document.getElementById('generation-stats').innerHTML = 
+                        `Generated in ${stats.method} mode • ${stats.word_count} words • ${stats.character_count} characters • Target: ${stats.target_role}${experienceText}`;
+                }
+                
+                document.getElementById('results').classList.remove('hidden');
+                document.getElementById('error-message').classList.add('hidden');
+            }, 100); // Small delay to ensure DOM update
         }
 
         function hideResults() {
@@ -963,11 +1141,82 @@
             window.URL.revokeObjectURL(url);
         }
 
-        // Initialize
+        // Auto-categorize experience based on years
+        function categorizeExperience(years) {
+            const yearsNum = parseInt(years) || 0;
+            const select = document.getElementById('skills-experience-auto');
+            
+            if (yearsNum <= 1) {
+                select.value = 'fresher';
+            } else if (yearsNum <= 5) {
+                select.value = 'mid-level';
+            } else if (yearsNum <= 10) {
+                select.value = 'senior';
+            } else {
+                select.value = 'expert';
+            }
+        }
+
+        // Add event listener for years input
         document.addEventListener('DOMContentLoaded', function() {
             // Set initial states
             toggleResumeInputMethod('upload');
+            
+            // Add years input listeners for all sections
+            const skillsYearsInput = document.getElementById('skills-years');
+            const resumeYearsInput = document.getElementById('resume-years');
+            const manualYearsInput = document.getElementById('manual-years');
+            
+            // Skills section
+            if (skillsYearsInput) {
+                skillsYearsInput.addEventListener('input', function() {
+                    console.log('🔍 Skills Years Input Changed:', this.value);
+                    categorizeExperience(this.value, 'skills-experience-auto');
+                });
+                categorizeExperience(skillsYearsInput.value, 'skills-experience-auto');
+            }
+            
+            // Resume section
+            if (resumeYearsInput) {
+                resumeYearsInput.addEventListener('input', function() {
+                    console.log('🔍 Resume Years Input Changed:', this.value);
+                    categorizeExperience(this.value, 'resume-experience-auto');
+                });
+                categorizeExperience(resumeYearsInput.value, 'resume-experience-auto');
+            }
+            
+            // Manual section
+            if (manualYearsInput) {
+                manualYearsInput.addEventListener('input', function() {
+                    console.log('🔍 Manual Years Input Changed:', this.value);
+                    categorizeExperience(this.value, 'manual-experience-auto');
+                });
+                categorizeExperience(manualYearsInput.value, 'manual-experience-auto');
+            }
         });
+
+        // Updated categorize function to accept select element ID
+        function categorizeExperience(years, selectId = 'skills-experience-auto') {
+            const yearsNum = parseInt(years) || 0;
+            const select = document.getElementById(selectId);
+            
+            console.log(`🔍 Categorize Debug - Years: ${years}, Select ID: ${selectId}, Years Num: ${yearsNum}`);
+            
+            if (select) {
+                if (yearsNum <= 1) {
+                    select.value = 'fresher';
+                } else if (yearsNum <= 5) {
+                    select.value = 'mid-level';
+                } else if (yearsNum <= 10) {
+                    select.value = 'senior';
+                } else {
+                    select.value = 'expert';
+                }
+                console.log(`🔍 Categorize Debug - Set to: ${select.value}`);
+            } else {
+                console.log(`🔍 Categorize Debug - Select element not found: ${selectId}`);
+            }
+        }
     </script>
 </body>
 </html>

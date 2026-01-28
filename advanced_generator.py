@@ -411,7 +411,6 @@ def process_resume(resume_text):
         if experience == 'Not found':
             experience = input("Experience not found in resume. Please enter your years of experience: ").strip()
             # Extract just the number from the input
-            import re
             years_match = re.search(r'\d+', experience)
             if years_match:
                 experience = years_match.group() + "+ years"

@@ -93,7 +93,7 @@ I am excited about the possibility of contributing my skills and enthusiasm to {
         return [
             """Dear {hiring_manager},
 
-{opening_phrase} {position} position at {company}. With {years_experience} years of professional experience in {key_skills}, I am confident that my expertise aligns perfectly with your requirements.
+{opening_phrase} {position} position at {company}. With {years_experience} of professional experience in {key_skills}, I am confident that my expertise aligns perfectly with your requirements.
 
 Throughout my career, I have consistently demonstrated excellence in {specialized_skills}. My experience with {matched_content} has enabled me to deliver measurable results and drive successful outcomes for my employers. I am particularly proud of my achievements in {key_achievements}, where I successfully led cross-functional teams to deliver projects ahead of schedule.
 
@@ -109,7 +109,7 @@ I would welcome the opportunity to discuss how my experience and skills can cont
             
             """Dear {hiring_manager},
 
-{opening_phrase} {position} opportunity at {company}. As a seasoned professional with {years_experience} years of experience specializing in {key_skills}, I am excited about the possibility of bringing my expertise to your esteemed organization.
+{opening_phrase} {position} opportunity at {company}. As a seasoned professional with {years_experience} of experience specializing in {key_skills}, I am excited about the possibility of bringing my expertise to your esteemed organization.
 
 My professional background includes extensive work in {specialized_skills}, where I have consistently delivered exceptional results. My experience with {matched_content} has prepared me to tackle complex challenges and drive meaningful impact. I have a proven track record of {key_achievements}.
 
@@ -129,7 +129,7 @@ I am eager to discuss how my background and expertise can benefit {company}. Tha
         return [
             """Dear {hiring_manager},
 
-{opening_phrase} {position} position at {company}. With {years_experience} years of experience in {key_skills}, I have developed the expertise and professional maturity needed to excel in this role and contribute meaningfully to your team.
+{opening_phrase} {position} position at {company}. With {years_experience} of experience in {key_skills}, I have developed the expertise and professional maturity needed to excel in this role and contribute meaningfully to your team.
 
 My career has been focused on building comprehensive skills in {specialized_skills}. Through various roles and projects, I have gained hands-on experience with {matched_content}, which has prepared me to handle the responsibilities outlined in your job description. I am particularly proud of my contributions to {key_achievements}, where I successfully delivered projects that exceeded expectations and drove measurable business impact.
 
@@ -146,7 +146,7 @@ Sincerely,
             
             """Dear {hiring_manager},
 
-{opening_phrase} {position} role at {company}. As a professional with {years_experience} years of experience in {key_skills}, I have developed the skills and expertise needed to make an immediate and meaningful contribution to your organization.
+{opening_phrase} {position} role at {company}. As a professional with {years_experience} of experience in {key_skills}, I have developed the skills and expertise needed to make an immediate and meaningful contribution to your organization.
 
 My professional journey has been characterized by continuous growth and learning in {specialized_skills}. I have gained valuable experience working with {matched_content}, which has equipped me to handle diverse challenges and deliver consistent results. My key achievements include {key_achievements}.
 
@@ -169,9 +169,12 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
         # Extract position - improved patterns
         position_patterns = [
             r'(?:position|role|job title)[:\s]+([^\n]+)',
+            r'(?:position|role|job title)[:\s]+([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)',
             r'(?:hiring|seeking|looking for)\s+(?:a|an)?\s*([^\n]+?(?:engineer|developer|manager|analyst|specialist)[^\n]*)',
             r'(?:software|data|marketing|sales)\s+(?:engineer|developer|manager|analyst|specialist)',
             r'(?:we are|we\'re)\s+(?:looking for|hiring|seeking)\s+(?:a|an)?\s*([^\n]+?(?:engineer|developer|manager|analyst|specialist)[^\n]*)',
+            r'(?:Fresher|Junior|Senior|Lead|Principal)\s+([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)',
+            r'([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s*\((?:Fresher|Junior|Senior|Lead|Principal)\)',
             r'(?:engineer|developer|manager|analyst|specialist)'
         ]
         
@@ -182,14 +185,34 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
                 if pattern == r'(?:engineer|developer|manager|analyst|specialist)':
                     # For this pattern, we need to get more context
                     position = match.group(0).strip()
+                    print(f"🔍 Debug: Position extracted (general) - Pattern: {pattern}, Position: {position}")
                 else:
                     position = match.group(1).strip()
+                    print(f"🔍 Debug: Position extracted (specific) - Pattern: {pattern}, Raw: {match.group(1)}")
                     # Clean up the position - remove trailing phrases and extra words
-                    position = re.sub(r'\s+(?:with|for|who|that|and|the|a|an|to|join|our|innovative|team|role|position).*$', '', position, flags=re.IGNORECASE)
+                    position = match.group(1).strip()
+                    
+                    # First, limit to reasonable length and remove line breaks
+                    position = position.split('\n')[0].strip()
+                    position = re.sub(r'\s+', ' ', position)  # Normalize whitespace
+                    
+                    # Remove experience level indicators in parentheses first
+                    position = re.sub(r'\s*\([^)]*\)', '', position).strip()
+                    
+                    # Remove trailing phrases ONLY after specific keywords, not after the main position
+                    position = re.sub(r'\s+(?:with|for|who|that|and|the|a|an|to|join|our|innovative|team|experience|required|looking|team).*$', '', position, flags=re.IGNORECASE)
                     position = re.sub(r'[.!?]+$', '', position).strip()
-                    # Also clean up common position phrases
+                    
+                    # Only remove trailing position/role/job if they're standalone words
                     position = re.sub(r'\s+(?:position|role|job)$', '', position, flags=re.IGNORECASE).strip()
+                    
+                    # Remove leading experience level indicators
+                    position = re.sub(r'^(?:Fresher|Junior|Senior|Lead|Principal)\s+', '', position, flags=re.IGNORECASE).strip()
+                    
+                    print(f"🔍 Debug: Position after cleaning: {position}")
                 break
+        else:
+            print(f"🔍 Debug: No position found in job_description: {job_description[:100]}...")
         
         # Extract skills
         skills = []
@@ -218,9 +241,15 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
         
         # Extract name (improved heuristic)
         name_patterns = [
+            # Name after years enhancement (web server format)
+            r'I have \d+ years of experience\.?\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)',
+            # Name at very beginning (resume format) - first line only
+            r'^([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)',
             # Explicit name statements
             r'(?:my name is|i am|i\'m)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)',
             r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:is|am|have|possess)',
+            # Name label pattern (for resume format)
+            r'Name[:\s]+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)',
             # Name at beginning of input
             r'^([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s*[,.]?\s*(?:have|am|with|experienced)',
             # Name with experience patterns
@@ -234,28 +263,43 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
         ]
         
         name = "Candidate"
-        for pattern in name_patterns:
+        print(f"🔍 Debug: Extracting name from user_input: {user_input[:200]}...")
+        for i, pattern in enumerate(name_patterns):
             match = re.search(pattern, user_input, re.IGNORECASE)
             if match:
                 extracted_name = match.group(1).strip()
+                print(f"🔍 Debug: Pattern {i+1} matched: {extracted_name}")
                 # Validate that it looks like a real name (2+ letters, starts with capital)
                 if len(extracted_name) >= 2 and extracted_name[0].isupper():
                     name = extracted_name
+                    print(f"🔍 Debug: Name extracted successfully: {name}")
                     break
+                else:
+                    print(f"🔍 Debug: Name validation failed: {extracted_name}")
+            else:
+                print(f"🔍 Debug: Pattern {i+1} no match: {pattern}")
         
-        # Extract experience
+        print(f"🔍 Debug: Final name result: {name}")
+        
+        # Extract experience - improved patterns
         experience_patterns = [
             r'(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?(?:experience|exp)',
             r'(\d+)\s*\+\s*(?:years?|yr)s?\s*(?:of\s*)?(?:experience|exp)',
-            r'(?:experience|exp)[:\s]+(\d+)\s*(?:years?|yr)s?'
+            r'(?:experience|exp)[:\s]+(\d+)\s*(?:years?|yr)s?',
+            r'(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?(?:professional|work|software)',
+            r'(?:have|with|possess)\s+(\d+)\s*(?:years?|yr)s?',
+            r'(\d+)\s*(?:years?|yr)s?\s+(?:of\s*)?(?:experience|exp|work|practice)'
         ]
         
-        years = "3+"
+        years = "0 years"
         for pattern in experience_patterns:
             match = re.search(pattern, user_input, re.IGNORECASE)
             if match:
-                years = match.group(1) + "+ years"
+                years = match.group(1) + " years"
+                print(f"🔍 Debug: Experience extracted - Pattern: {pattern}, Match: {match.group(1)}, Years: {years}")
                 break
+        else:
+            print(f"🔍 Debug: No experience found in user_input: {user_input[:100]}...")
         
         # Extract skills
         skills = []
@@ -415,7 +459,7 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
         return '\n\n'.join(unique_paragraphs)
     
     def generate_cover_letter(self, job_description: str, user_input: str, 
-                            best_match_content: str = "", company: str = "", experience_level: str = "") -> str:
+                            best_match_content: str = "", company: str = "", experience_level: str = "", target_role: str = "") -> str:
         """Generate a personalized cover letter."""
         job_info = self.extract_job_info(job_description)
         user_info = self.extract_user_info(user_input)
@@ -445,11 +489,11 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
         # Prepare template variables
         template_vars = {
             'hiring_manager': 'Hiring Manager',
-            'position': job_info.get('position', 'Professional position'),
+            'position': target_role or job_info.get('position', 'Professional position'),
             'company': company or job_info.get('company', 'the Company'),
             'key_skills': job_info.get('skills', user_skills),
             'matched_content': best_match_content or self._generate_dynamic_content(job_info, user_info),
-            'years_experience': user_info.get('years', '3+'),
+            'years_experience': user_info.get('years', '0 years'),
             'candidate_name': user_info.get('name', 'Candidate'),
             'company_values': job_info.get('company_values', 'innovation and excellence'),
             'key_achievements': user_info.get('achievements', 'delivering successful projects'),
@@ -470,6 +514,11 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
             if exp_match:
                 # Replace the experience in the generated letter
                 cover_letter = re.sub(r'\b\d+\+?\s*years', exp_match.group(1) + ' years', cover_letter, flags=re.IGNORECASE)
+            else:
+                # Also try to extract from user_info
+                user_exp = user_info.get('years', '3+')
+                if user_exp != '3+':
+                    cover_letter = re.sub(r'\b3\+\s*years', user_exp, cover_letter, flags=re.IGNORECASE)
             
             # Enhance and clean
             cover_letter = self._enhance_natural_flow(cover_letter)

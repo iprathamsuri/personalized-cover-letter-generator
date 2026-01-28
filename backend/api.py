@@ -155,7 +155,15 @@ def generate_cover_letter():
     try:
         print("Generate endpoint called")
         data = request.get_json()
-        print(f"Received data: {data}")
+        print(f"🔍 Frontend Debug - Received data keys: {list(data.keys())}")
+        print(f"🔍 Frontend Debug - Method: {data.get('method', 'N/A')}")
+        print(f"🔍 Frontend Debug - User input length: {len(data.get('user_input', ''))}")
+        print(f"🔍 Frontend Debug - User input preview: {data.get('user_input', '')[:100]}...")
+        print(f"🔍 Frontend Debug - Target role: {data.get('target_role', 'N/A')}")
+        print(f"🔍 Frontend Debug - Company: {data.get('company', 'N/A')}")
+        print(f"🔍 Frontend Debug - Experience level: {data.get('experience_level', 'N/A')}")
+        print(f"🔍 Frontend Debug - Job description length: {len(data.get('job_description', ''))}")
+        print(f"🔍 Frontend Debug - Job description preview: {data.get('job_description', '')[:100]}...")
         
         # Extract required fields
         method = data.get('method', 'skills')
@@ -175,21 +183,21 @@ def generate_cover_letter():
         if method == 'skills':
             if not user_input:
                 return jsonify({'error': 'User input is required for skills-based generation'}), 400
-            cover_letter = generator.generate_cover_letter(job_description, user_input, company=company, experience_level=experience_level)
+            cover_letter = generator.generate_cover_letter(job_description, user_input, company=company, experience_level=experience_level, target_role=target_role)
             
         elif method == 'resume':
             if not resume_text and not user_input:
                 return jsonify({'error': 'Resume text or user input is required for resume-based generation'}), 400
             # Use resume_text if available, otherwise use user_input
             input_text = resume_text or user_input
-            cover_letter = generator.generate_cover_letter(job_description, input_text, company=company, experience_level=experience_level)
+            cover_letter = generator.generate_cover_letter(job_description, input_text, company=company, experience_level=experience_level, target_role=target_role)
             
         elif method == 'manual_jd':
             if not job_description:
                 return jsonify({'error': 'Job description is required for manual JD generation'}), 400
             if not user_input:
                 return jsonify({'error': 'User input is required for manual JD generation'}), 400
-            cover_letter = generator.generate_cover_letter(job_description, user_input, company=company, experience_level=experience_level)
+            cover_letter = generator.generate_cover_letter(job_description, user_input, company=company, experience_level=experience_level, target_role=target_role)
             
         else:
             return jsonify({'error': 'Invalid generation method'}), 400
