@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Cover Letter Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background"></div>
+
+    <div class="container glass animate-in">
+
+        <h1>Personalized Cover Letter Generator</h1>
+        <p class="subtitle">
+            Generate a tailored cover letter
+        </p>
+
+        <form id="cl-form" class="form-grid">
+
+            <!-- JOB DESCRIPTION -->
+            <div class="card">
+                <h3>Job Description</h3>
+                <textarea id="job_description" placeholder="Paste the job description here..." required></textarea>
+            </div>
+
+            <!-- SKILLS -->
+            <div class="card">
+                <h3>Your Skills</h3>
+                <textarea id="skills" placeholder="e.g. Python, Data Analysis, Machine Learning"></textarea>
+            </div>
+
+            <div class="card">
+                <h3>Your Profile Type</h3>
+                <select id="userType">
+                    <option value="fresher">Fresher / Student</option>
+                    <option value="experienced">Professional / Experienced</option>
+                </select>
+            </div>
+
+            <button type="submit" form="cl-form">
+                ✨ Generate Cover Letter
+            </button>
+
+        </form>
+
+        <p class="status-text">
+            Click “Generate Cover Letter” to see the output below.
+        </p>
+
+        <div class="output-section">
+            <h2>Generated Cover Letter</h2>
+            <div id="output">
+                Your personalized cover letter will appear here.
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+
