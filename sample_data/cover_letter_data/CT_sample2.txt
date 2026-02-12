@@ -1,7 +1,0 @@
-Dear Hiring Manager,
-I would like to express my interest in the {{position}} position posted in the career section of your site. I have enclosed my resume detailing my unique skill set.
-I recently graduated from the User Experience Design Immersive program at General Assembly where I improved my skills in user research, prototyping, wireframing, user flows, and interaction design. I hold a BFA in Digital Art from the University of Washington.
-As a design consultant, I worked on planning a mobile application and developed features such as personas, site maps, wireframes, and interactive prototypes.
-I feel that with my skill in rapid iteration and collaboration, I would make an excellent addition to your team.
-Thank you,
-Sarah Arnegard
