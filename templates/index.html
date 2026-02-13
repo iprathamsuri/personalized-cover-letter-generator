@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CoverLetter Generator - Create Professional Cover Letters</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -191,8 +193,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .result-card {
@@ -238,12 +245,21 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Animated Background -->
     <div class="animated-bg"></div>
@@ -253,12 +269,13 @@
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
                         <i class="fas fa-file-signature text-white"></i>
                     </div>
                     <span class="text-white font-bold text-xl">CoverLetter AI Pro</span>
                 </div>
-                
+
                 <div class="flex items-center space-x-4">
                     <button onclick="window.location.href='/'" class="text-gray-300 hover:text-white transition">
                         <i class="fas fa-home mr-2"></i> Home
@@ -277,7 +294,7 @@
             <!-- Header -->
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                    Create Your 
+                    Create Your
                     <span class="gradient-text">Professional Cover Letter</span>
                 </h1>
                 <p class="text-xl text-gray-300">
@@ -302,17 +319,14 @@
             <div id="skills-tab" class="tab-content">
                 <div class="glass-morphism p-8">
                     <h2 class="text-2xl font-bold mb-6 text-white">Skills-Based Generation</h2>
-                    
+
                     <div class="space-y-6">
                         <div>
                             <label for="skills-input" class="block text-sm font-medium text-gray-300 mb-2">
-                                Your Skills & Experience
+                                Name, Your Skills & Experience
                             </label>
-                            <textarea 
-                                id="skills-input" 
-                                class="textarea-field w-full"
-                                placeholder="Enter your skills, experience, and qualifications. For example: 5 years of software development experience, proficient in Python, JavaScript, React, Node.js, strong problem-solving skills, team leadership experience..."
-                            ></textarea>
+                            <textarea id="skills-input" class="textarea-field w-full"
+                                placeholder="Enter your skills, experience, and qualifications. For example: 5 years of software development experience, proficient in Python, JavaScript, React, Node.js, strong problem-solving skills, team leadership experience..."></textarea>
                         </div>
 
                         <div>
@@ -323,33 +337,34 @@
                                 <!-- JD Input Method Selection -->
                                 <div class="flex space-x-4">
                                     <label class="flex items-center">
-                                        <input type="radio" name="skills-jd-method" value="upload" checked onchange="toggleSkillsJDMethod('upload')" class="mr-2">
+                                        <input type="radio" name="skills-jd-method" value="upload" checked
+                                            onchange="toggleSkillsJDMethod('upload')" class="mr-2">
                                         <span>Upload JD File</span>
                                     </label>
                                     <label class="flex items-center">
-                                        <input type="radio" name="skills-jd-method" value="manual" onchange="toggleSkillsJDMethod('manual')" class="mr-2">
+                                        <input type="radio" name="skills-jd-method" value="manual"
+                                            onchange="toggleSkillsJDMethod('manual')" class="mr-2">
                                         <span>Paste JD Text</span>
                                     </label>
                                 </div>
-                                
+
                                 <!-- JD File Upload -->
                                 <div id="skills-jd-upload" class="upload-area">
-                                    <input type="file" id="skills-jd-file" accept=".txt,.pdf,.docx,.doc" class="hidden" onchange="handleSkillsJDUpload(event)">
-                                    <div onclick="document.getElementById('skills-jd-file').click()" class="cursor-pointer">
+                                    <input type="file" id="skills-jd-file" accept=".txt,.pdf,.docx,.doc" class="hidden"
+                                        onchange="handleSkillsJDUpload(event)">
+                                    <div onclick="document.getElementById('skills-jd-file').click()"
+                                        class="cursor-pointer">
                                         <i class="fas fa-cloud-upload-alt text-4xl text-purple-400 mb-4"></i>
                                         <p class="text-gray-300">Click to upload job description file</p>
                                         <p class="text-sm text-gray-400">Supports: PDF, DOCX, TXT</p>
                                     </div>
                                     <div id="skills-jd-file-info" class="mt-2 text-sm text-green-400"></div>
                                 </div>
-                                
+
                                 <!-- JD Manual Input -->
                                 <div id="skills-jd-manual" class="hidden">
-                                    <textarea 
-                                        id="skills-jd" 
-                                        class="textarea-field w-full"
-                                        placeholder="Paste the job description here for better matching..."
-                                    ></textarea>
+                                    <textarea id="skills-jd" class="textarea-field w-full"
+                                        placeholder="Paste the job description here for better matching..."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -360,15 +375,8 @@
                                     Years of Experience
                                 </label>
                                 <div class="flex gap-2">
-                                    <input 
-                                        type="number" 
-                                        id="skills-years" 
-                                        class="input-field w-24"
-                                        placeholder="Years"
-                                        min="0"
-                                        max="50"
-                                        value="3"
-                                    >
+                                    <input type="number" id="skills-years" class="input-field w-24" placeholder="Years"
+                                        min="0" max="50" value="3">
                                     <select id="skills-experience-auto" class="input-field flex-1" disabled>
                                         <option value="fresher">Fresher / Entry Level (0-1 years)</option>
                                         <option value="mid-level" selected>Professional (2-5 years)</option>
@@ -405,12 +413,8 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Company Name (Optional)
                             </label>
-                            <input 
-                                type="text" 
-                                id="skills-company" 
-                                class="input-field w-full"
-                                placeholder="e.g., Tech Corp"
-                            >
+                            <input type="text" id="skills-company" class="input-field w-full"
+                                placeholder="e.g., Tech Corp">
                         </div>
 
                         <button onclick="generateFromSkills()" class="btn-primary w-full py-3">
@@ -424,7 +428,7 @@
             <div id="resume-tab" class="tab-content hidden">
                 <div class="glass-morphism p-8">
                     <h2 class="text-2xl font-bold mb-6 text-white">Resume-Based Generation</h2>
-                    
+
                     <div class="space-y-6">
                         <!-- Resume Input Method -->
                         <div>
@@ -433,11 +437,13 @@
                             </label>
                             <div class="flex space-x-4 mb-4">
                                 <label class="flex items-center">
-                                    <input type="radio" name="resume-input-method" value="upload" checked onchange="toggleResumeInputMethod('upload')" class="mr-2">
+                                    <input type="radio" name="resume-input-method" value="upload" checked
+                                        onchange="toggleResumeInputMethod('upload')" class="mr-2">
                                     <span>Upload Resume File</span>
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="radio" name="resume-input-method" value="paste" onchange="toggleResumeInputMethod('paste')" class="mr-2">
+                                    <input type="radio" name="resume-input-method" value="paste"
+                                        onchange="toggleResumeInputMethod('paste')" class="mr-2">
                                     <span>Paste Resume Text</span>
                                 </label>
                             </div>
@@ -448,11 +454,14 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Upload Resume
                             </label>
-                            <div class="file-upload" onclick="document.getElementById('resume-file').click()" ondrop="handleDrop(event, 'resume')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                            <div class="file-upload" onclick="document.getElementById('resume-file').click()"
+                                ondrop="handleDrop(event, 'resume')" ondragover="handleDragOver(event)"
+                                ondragleave="handleDragLeave(event)">
                                 <i class="fas fa-cloud-upload-alt text-4xl text-purple-400 mb-4"></i>
                                 <p class="text-gray-300 mb-2">Drop your resume here or click to browse</p>
                                 <p class="text-sm text-gray-500">Supports PDF, DOCX, TXT files (Max 16MB)</p>
-                                <input type="file" id="resume-file" accept=".pdf,.docx,.doc,.txt" onchange="handleFileSelect(event, 'resume')" class="hidden">
+                                <input type="file" id="resume-file" accept=".pdf,.docx,.doc,.txt"
+                                    onchange="handleFileSelect(event, 'resume')" class="hidden">
                             </div>
                             <div id="resume-file-info" class="mt-2 text-sm text-gray-400"></div>
                         </div>
@@ -462,11 +471,8 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Paste Resume Text
                             </label>
-                            <textarea 
-                                id="resume-text" 
-                                class="textarea-field w-full"
-                                placeholder="Paste your resume content here..."
-                            ></textarea>
+                            <textarea id="resume-text" class="textarea-field w-full"
+                                placeholder="Paste your resume content here..."></textarea>
                         </div>
 
                         <!-- Job Description -->
@@ -474,11 +480,8 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Job Description
                             </label>
-                            <textarea 
-                                id="resume-jd" 
-                                class="textarea-field w-full"
-                                placeholder="Paste the job description here..."
-                            ></textarea>
+                            <textarea id="resume-jd" class="textarea-field w-full"
+                                placeholder="Paste the job description here..."></textarea>
                         </div>
 
                         <div class="grid md:grid-cols-2 gap-4">
@@ -487,15 +490,8 @@
                                     Years of Experience
                                 </label>
                                 <div class="flex gap-2">
-                                    <input 
-                                        type="number" 
-                                        id="resume-years" 
-                                        class="input-field w-24"
-                                        placeholder="Years"
-                                        min="0"
-                                        max="50"
-                                        value="3"
-                                    >
+                                    <input type="number" id="resume-years" class="input-field w-24" placeholder="Years"
+                                        min="0" max="50" value="3">
                                     <select id="resume-experience-auto" class="input-field flex-1" disabled>
                                         <option value="fresher">Fresher / Entry Level (0-1 years)</option>
                                         <option value="mid-level" selected>Professional (2-5 years)</option>
@@ -532,12 +528,8 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Company Name (Optional)
                             </label>
-                            <input 
-                                type="text" 
-                                id="resume-company" 
-                                class="input-field w-full"
-                                placeholder="e.g., Tech Corp"
-                            >
+                            <input type="text" id="resume-company" class="input-field w-full"
+                                placeholder="e.g., Tech Corp">
                         </div>
 
                         <button onclick="generateFromResume()" class="btn-primary w-full py-3">
@@ -551,30 +543,22 @@
             <div id="manual-tab" class="tab-content hidden">
                 <div class="glass-morphism p-8">
                     <h2 class="text-2xl font-bold mb-6 text-white">Manual Input Generation</h2>
-                    
+
                     <div class="space-y-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Job Description
                             </label>
-                            <textarea 
-                                id="manual-jd" 
-                                class="textarea-field w-full"
-                                placeholder="Paste the complete job description here..."
-                                required
-                            ></textarea>
+                            <textarea id="manual-jd" class="textarea-field w-full"
+                                placeholder="Paste the complete job description here..." required></textarea>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Your Information
                             </label>
-                            <textarea 
-                                id="manual-input" 
-                                class="textarea-field w-full"
-                                placeholder="Enter your skills, experience, and qualifications..."
-                                required
-                            ></textarea>
+                            <textarea id="manual-input" class="textarea-field w-full"
+                                placeholder="Enter your skills, experience, and qualifications..." required></textarea>
                         </div>
 
                         <div class="grid md:grid-cols-2 gap-4">
@@ -583,15 +567,8 @@
                                     Years of Experience
                                 </label>
                                 <div class="flex gap-2">
-                                    <input 
-                                        type="number" 
-                                        id="manual-years" 
-                                        class="input-field w-24"
-                                        placeholder="Years"
-                                        min="0"
-                                        max="50"
-                                        value="3"
-                                    >
+                                    <input type="number" id="manual-years" class="input-field w-24" placeholder="Years"
+                                        min="0" max="50" value="3">
                                     <select id="manual-experience-auto" class="input-field flex-1" disabled>
                                         <option value="fresher">Fresher / Entry Level (0-1 years)</option>
                                         <option value="mid-level" selected>Professional (2-5 years)</option>
@@ -628,12 +605,8 @@
                             <label class="block text-sm font-medium text-gray-300 mb-2">
                                 Company Name (Optional)
                             </label>
-                            <input 
-                                type="text" 
-                                id="manual-company" 
-                                class="input-field w-full"
-                                placeholder="e.g., Tech Corp"
-                            >
+                            <input type="text" id="manual-company" class="input-field w-full"
+                                placeholder="e.g., Tech Corp">
                         </div>
 
                         <button onclick="generateFromManual()" class="btn-primary w-full py-3">
@@ -666,7 +639,9 @@
                             </button>
                         </div>
                     </div>
-                    <div id="cover-letter-content" class="bg-gray-900 bg-opacity-50 rounded-lg p-6 text-white leading-relaxed whitespace-pre-wrap"></div>
+                    <div id="cover-letter-content"
+                        class="bg-gray-900 bg-opacity-50 rounded-lg p-6 text-white leading-relaxed whitespace-pre-wrap">
+                    </div>
                     <div id="generation-stats" class="mt-4 text-sm text-gray-400"></div>
                 </div>
             </div>
@@ -697,16 +672,16 @@
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.add('hidden');
             });
-            
+
             // Remove active class from all buttons
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
             });
-            
+
             // Show selected tab
             document.getElementById(`${tab}-tab`).classList.remove('hidden');
             event.target.classList.add('active');
-            
+
             currentTab = tab;
             hideResults();
         }
@@ -751,21 +726,21 @@
         async function uploadFile(file, type) {
             const formData = new FormData();
             formData.append('file', file);
-            
+
             const endpoint = type === 'resume' ? '/api/upload-resume' : '/api/upload-jd';
-            
+
             try {
                 const response = await fetch(endpoint, {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.success) {
                     if (type === 'resume') {
                         resumeText = result.text;
-                        document.getElementById('resume-file-info').innerHTML = 
+                        document.getElementById('resume-file-info').innerHTML =
                             `<i class="fas fa-check text-green-400 mr-2"></i> ${file.name} uploaded successfully (${result.word_count} words)`;
                     }
                 } else {
@@ -782,7 +757,7 @@
         function toggleSkillsJDMethod(method) {
             const uploadDiv = document.getElementById('skills-jd-upload');
             const manualDiv = document.getElementById('skills-jd-manual');
-            
+
             if (method === 'upload') {
                 uploadDiv.classList.remove('hidden');
                 manualDiv.classList.add('hidden');
@@ -797,18 +772,18 @@
             if (file) {
                 const formData = new FormData();
                 formData.append('file', file);
-                
+
                 try {
                     const response = await fetch('/api/upload-jd', {
                         method: 'POST',
                         body: formData
                     });
-                    
+
                     const result = await response.json();
-                    
+
                     if (result.success) {
                         skillsJDText = result.text;
-                        document.getElementById('skills-jd-file-info').innerHTML = 
+                        document.getElementById('skills-jd-file-info').innerHTML =
                             `<i class="fas fa-check text-green-400 mr-2"></i> ${file.name} uploaded successfully (${result.word_count} words)`;
                     } else {
                         showError(result.error);
@@ -826,16 +801,16 @@
             const experience = document.getElementById('skills-experience-auto').value;
             const targetRole = document.getElementById('skills-role').value;
             const company = document.getElementById('skills-company').value;
-            
+
             // Debug logging
             console.log('🔍 Frontend Debug - Years input:', years);
             console.log('🔍 Frontend Debug - User input:', userInput);
             console.log('🔍 Frontend Debug - Experience level:', experience);
-            
+
             // Get job description based on input method
             const jdMethod = document.querySelector('input[name="skills-jd-method"]:checked').value;
             let jobDescription = '';
-            
+
             if (jdMethod === 'upload') {
                 jobDescription = skillsJDText;
                 if (!jobDescription.trim()) {
@@ -849,18 +824,18 @@
                     return;
                 }
             }
-            
+
             if (!userInput.trim()) {
                 showError('Please enter your skills and experience');
                 return;
             }
-            
+
             // Automatically add years to user input if not already mentioned
             let enhancedUserInput = userInput;
             console.log('🔍 Frontend Debug - Before enhancement:', enhancedUserInput);
             console.log('🔍 Frontend Debug - Years value:', years);
             console.log('🔍 Frontend Debug - User input includes "year":', userInput.toLowerCase().includes('year'));
-            
+
             // Force years to be included
             if (years && years !== '0' && years !== '') {
                 // Check if user input already mentions WORK experience (not art, education, etc.)
@@ -869,9 +844,9 @@
                     /(?:work|professional|industry|technical|software|programming|development|experience)[:\s]+(\d+)\s*(?:years?|yr)s?/i,
                     /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?experience/i
                 ];
-                
+
                 const hasWorkExperience = workExperiencePatterns.some(pattern => pattern.test(userInput));
-                
+
                 if (!hasWorkExperience) {
                     enhancedUserInput = `I have ${years} years of experience. ${userInput}`;
                     console.log('🔍 Frontend Debug - After enhancement:', enhancedUserInput);
@@ -883,7 +858,7 @@
                 enhancedUserInput = `I have 3 years of experience. ${userInput}`;
                 console.log('🔍 Frontend Debug - Forced enhancement:', enhancedUserInput);
             }
-            
+
             await generateCoverLetter('skills', enhancedUserInput, jobDescription, targetRole, company, '', experience);
         }
 
@@ -893,15 +868,15 @@
             const experience = document.getElementById('resume-experience-auto').value;
             const targetRole = document.getElementById('resume-role').value;
             const company = document.getElementById('resume-company').value;
-            
+
             // Debug logging
             console.log('🔍 Resume Debug - Years input:', years);
             console.log('🔍 Resume Debug - Experience level:', experience);
-            
+
             // Get resume text based on input method
             const resumeMethod = document.querySelector('input[name="resume-input-method"]:checked').value;
             let resumeInput = '';
-            
+
             if (resumeMethod === 'upload') {
                 resumeInput = resumeText;
                 if (!resumeInput.trim()) {
@@ -915,15 +890,15 @@
                     return;
                 }
             }
-            
+
             if (!jobDescription.trim()) {
                 showError('Please enter the job description');
                 return;
             }
-            
+
             console.log('🔍 Resume Debug - Resume input length:', resumeInput.length);
             console.log('🔍 Resume Debug - Before enhancement:', resumeInput.substring(0, 100) + '...');
-            
+
             // Automatically add years to resume input if not already mentioned
             let enhancedResumeInput = resumeInput;
             if (years && years !== '0' && years !== '') {
@@ -933,15 +908,15 @@
                     /(?:work|professional|industry|technical|software|programming|development|experience)(?!.*art)[:\s]+(\d+)\s*(?:years?|yr)s?/i,
                     /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?experience(?!.*art)/i
                 ];
-                
+
                 // Also explicitly exclude art-related years
                 const hasArtYears = /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?(?:art|drawing|music|dance|painting|sketching)/i.test(resumeInput);
-                
+
                 const hasWorkExperience = workExperiencePatterns.some(pattern => pattern.test(resumeInput)) && !hasArtYears;
-                
+
                 console.log('🔍 Resume Debug - Has art years:', hasArtYears);
                 console.log('🔍 Resume Debug - Has work experience:', hasWorkExperience);
-                
+
                 if (!hasWorkExperience) {
                     enhancedResumeInput = `I have ${years} years of experience. ${resumeInput}`;
                     console.log('🔍 Resume Debug - After enhancement:', enhancedResumeInput.substring(0, 150) + '...');
@@ -953,7 +928,7 @@
                 enhancedResumeInput = `I have 3 years of experience. ${resumeInput}`;
                 console.log('🔍 Resume Debug - Forced enhancement:', enhancedResumeInput.substring(0, 150) + '...');
             }
-            
+
             await generateCoverLetter('resume', enhancedResumeInput, jobDescription, targetRole, company, enhancedResumeInput, experience);
         }
 
@@ -964,28 +939,28 @@
             const experience = document.getElementById('manual-experience-auto').value;
             const targetRole = document.getElementById('manual-role').value;
             const company = document.getElementById('manual-company').value;
-            
+
             // Debug logging
             console.log('🔍 Manual Debug - Years input:', years);
             console.log('🔍 Manual Debug - User input:', userInput);
             console.log('🔍 Manual Debug - Experience level:', experience);
-            
+
             if (!userInput.trim()) {
                 showError('Please enter your information');
                 return;
             }
-            
+
             if (!jobDescription.trim()) {
                 showError('Please enter the job description');
                 return;
             }
-            
+
             // Automatically add years to user input if not already mentioned
             let enhancedUserInput = userInput;
             console.log('🔍 Manual Debug - Before enhancement:', enhancedUserInput);
             console.log('🔍 Manual Debug - Years value:', years);
             console.log('🔍 Manual Debug - User input includes "year":', userInput.toLowerCase().includes('year'));
-            
+
             // Force years to be included
             if (years && years !== '0' && years !== '') {
                 // Check if user input already mentions WORK experience (not art, education, etc.)
@@ -994,9 +969,9 @@
                     /(?:work|professional|industry|technical|software|programming|development|experience)[:\s]+(\d+)\s*(?:years?|yr)s?/i,
                     /(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?experience/i
                 ];
-                
+
                 const hasWorkExperience = workExperiencePatterns.some(pattern => pattern.test(userInput));
-                
+
                 if (!hasWorkExperience) {
                     enhancedUserInput = `I have ${years} years of experience. ${userInput}`;
                     console.log('🔍 Manual Debug - After enhancement:', enhancedUserInput);
@@ -1008,14 +983,14 @@
                 enhancedUserInput = `I have 3 years of experience. ${userInput}`;
                 console.log('🔍 Manual Debug - Forced enhancement:', enhancedUserInput);
             }
-            
+
             await generateCoverLetter('manual_jd', enhancedUserInput, jobDescription, targetRole, company, '', experience);
         }
 
         async function generateCoverLetter(method, userInput, jobDescription, targetRole, company, resumeText = '', experience = '') {
             showLoading();
             hideResults();
-            
+
             // Debug logging - what's being sent to API
             console.log('🔍 API Debug - Method:', method);
             console.log('🔍 API Debug - User Input:', userInput);
@@ -1024,7 +999,7 @@
             console.log('🔍 API Debug - Company:', company);
             console.log('🔍 API Debug - Resume Text:', resumeText);
             console.log('🔍 API Debug - Experience Level:', experience);
-            
+
             try {
                 const response = await fetch('/api/generate', {
                     method: 'POST',
@@ -1041,15 +1016,15 @@
                         experience_level: experience
                     })
                 });
-                
+
                 const result = await response.json();
-                
+
                 // Debug logging - what's received from backend
                 console.log('🔍 Response Debug - Full result:', result);
                 console.log('🔍 Response Debug - Success:', result.success);
                 console.log('🔍 Response Debug - Cover letter preview:', result.cover_letter ? result.cover_letter.substring(0, 200) + '...' : 'No cover letter');
                 console.log('🔍 Response Debug - Generation info:', result.generation_info);
-                
+
                 if (result.success) {
                     displayResults(result.cover_letter, result.generation_info);
                 } else {
@@ -1075,28 +1050,28 @@
         function displayResults(coverLetter, stats) {
             console.log('🔍 Display Debug - Cover letter received:', coverLetter ? coverLetter.substring(0, 200) + '...' : 'No cover letter');
             console.log('🔍 Display Debug - Stats received:', stats);
-            
+
             // Clear any existing content first
             const contentElement = document.getElementById('cover-letter-content');
             contentElement.textContent = '';
-            
+
             // Force DOM update
             setTimeout(() => {
                 currentCoverLetter = coverLetter;
                 contentElement.textContent = coverLetter;
-                
+
                 // Debug - check what's actually in the content element
                 const displayedContent = contentElement.textContent;
                 console.log('🔍 Display Debug - Actually displayed:', displayedContent ? displayedContent.substring(0, 200) + '...' : 'No content displayed');
                 console.log('🔍 Display Debug - Contains "5 years":', displayedContent.includes('5 years'));
                 console.log('🔍 Display Debug - Contains "0 years":', displayedContent.includes('0 years'));
-                
+
                 if (stats) {
                     const experienceText = stats.experience_level ? ` • Experience: ${stats.experience_level}` : '';
-                    document.getElementById('generation-stats').innerHTML = 
+                    document.getElementById('generation-stats').innerHTML =
                         `Generated in ${stats.method} mode • ${stats.word_count} words • ${stats.character_count} characters • Target: ${stats.target_role}${experienceText}`;
                 }
-                
+
                 document.getElementById('results').classList.remove('hidden');
                 document.getElementById('error-message').classList.add('hidden');
             }, 100); // Small delay to ensure DOM update
@@ -1120,7 +1095,7 @@
                 const btn = document.getElementById('copy-btn');
                 btn.classList.add('copied');
                 btn.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
-                
+
                 setTimeout(() => {
                     btn.classList.remove('copied');
                     btn.innerHTML = '<i class="fas fa-copy mr-2"></i> Copy';
@@ -1145,7 +1120,7 @@
         function categorizeExperience(years) {
             const yearsNum = parseInt(years) || 0;
             const select = document.getElementById('skills-experience-auto');
-            
+
             if (yearsNum <= 1) {
                 select.value = 'fresher';
             } else if (yearsNum <= 5) {
@@ -1158,36 +1133,36 @@
         }
 
         // Add event listener for years input
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Set initial states
             toggleResumeInputMethod('upload');
-            
+
             // Add years input listeners for all sections
             const skillsYearsInput = document.getElementById('skills-years');
             const resumeYearsInput = document.getElementById('resume-years');
             const manualYearsInput = document.getElementById('manual-years');
-            
+
             // Skills section
             if (skillsYearsInput) {
-                skillsYearsInput.addEventListener('input', function() {
+                skillsYearsInput.addEventListener('input', function () {
                     console.log('🔍 Skills Years Input Changed:', this.value);
                     categorizeExperience(this.value, 'skills-experience-auto');
                 });
                 categorizeExperience(skillsYearsInput.value, 'skills-experience-auto');
             }
-            
+
             // Resume section
             if (resumeYearsInput) {
-                resumeYearsInput.addEventListener('input', function() {
+                resumeYearsInput.addEventListener('input', function () {
                     console.log('🔍 Resume Years Input Changed:', this.value);
                     categorizeExperience(this.value, 'resume-experience-auto');
                 });
                 categorizeExperience(resumeYearsInput.value, 'resume-experience-auto');
             }
-            
+
             // Manual section
             if (manualYearsInput) {
-                manualYearsInput.addEventListener('input', function() {
+                manualYearsInput.addEventListener('input', function () {
                     console.log('🔍 Manual Years Input Changed:', this.value);
                     categorizeExperience(this.value, 'manual-experience-auto');
                 });
@@ -1199,9 +1174,9 @@
         function categorizeExperience(years, selectId = 'skills-experience-auto') {
             const yearsNum = parseInt(years) || 0;
             const select = document.getElementById(selectId);
-            
+
             console.log(`🔍 Categorize Debug - Years: ${years}, Select ID: ${selectId}, Years Num: ${yearsNum}`);
-            
+
             if (select) {
                 if (yearsNum <= 1) {
                     select.value = 'fresher';
@@ -1219,4 +1194,5 @@
         }
     </script>
 </body>
+
 </html>
