@@ -25,35 +25,31 @@ def advanced_interactive_generator():
     
     while True:
         print("1️⃣  Upload Custom Job Description")
-        print("2️⃣  Use Existing Job Description File")
-        print("3️⃣  Enter Job Description Manually")
-        print("4️⃣  Resume-Based Generation")
-        print("5️⃣  Skills-Based Generation")
-        print("6️⃣  Exit")
+        print("2️⃣  Enter Job Description Manually")
+        print("3️⃣  Resume-Based Generation")
+        print("4️⃣  Skills-Based Generation")
+        print("5️⃣  Exit")
         print()
         
-        choice = input("Enter your choice (1-6): ").strip()
+        choice = input("Enter your choice (1-5): ").strip()
         
         if choice == '1':
             upload_custom_jd()
             break
         elif choice == '2':
-            generate_from_jd_file()
-            break
-        elif choice == '3':
             generate_from_manual_jd()
             break
-        elif choice == '4':
+        elif choice == '3':
             generate_from_resume()
             break
-        elif choice == '5':
+        elif choice == '4':
             generate_from_skills()
             break
-        elif choice == '6':
-            print("👋 Goodbye!")
+        elif choice == '5':
+            print("👋 Thank you for using Cover Letter Generator!")
             break
         else:
-            print("❌ Invalid choice. Please enter 1, 2, 3, 4, 5, or 6.")
+            print("❌ Invalid choice. Please enter a number between 1 and 5.")
             print()
 
 
@@ -766,6 +762,11 @@ def generate_from_manual_jd():
     # Get user input
     user_input = input("\n📝 Enter your details (name, experience, skills): ").strip()
     
+    # Extract company name from job description or ask user
+    target_company = input("🏢 Company name (optional - press Enter to skip): ").strip()
+    if not target_company:
+        target_company = ""
+    
     # Get output filename
     output_file = input("💾 Enter output filename (e.g., my_cover_letter.txt): ").strip()
     if not output_file:
@@ -818,6 +819,11 @@ def generate_from_skills():
     
     # Ask for target role
     target_role = input("🎯 What type of position are you applying for? (e.g., Frontend Developer, Data Scientist, etc.): ").strip()
+    
+    # Extract company name from job description or ask user
+    target_company = input("🏢 Company name (optional - press Enter to skip): ").strip()
+    if not target_company:
+        target_company = ""
     
     # Get output filename
     output_file = input("💾 Enter output filename (e.g., my_cover_letter.txt): ").strip()

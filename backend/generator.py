@@ -288,7 +288,9 @@ I am enthusiastic about the opportunity to contribute my skills and experience t
             r'(?:experience|exp)[:\s]+(\d+)\s*(?:years?|yr)s?',
             r'(\d+)\s*(?:years?|yr)s?\s*(?:of\s*)?(?:professional|work|software)',
             r'(?:have|with|possess)\s+(\d+)\s*(?:years?|yr)s?',
-            r'(\d+)\s*(?:years?|yr)s?\s+(?:of\s*)?(?:experience|exp|work|practice)'
+            r'(\d+)\s*(?:years?|yr)s?\s+(?:of\s*)?(?:experience|exp|work|practice)',
+            # Comma-separated format: "Nil,4 years,skills"
+            r'[,\s]+(\d+)\s*(?:years?|yr)s?'
         ]
         
         years = "0 years"
